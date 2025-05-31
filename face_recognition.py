@@ -1,40 +1,30 @@
-import sys //sys ตัวนี้มันเป็น library ที่จัดเตรียมฟังก์ชันและตัวแปรที่ใช้เพื่อจัดการกับส่วนต่างๆของ Python Runtime Environment เอาไว้ ช่วยให้เราเข้าถึงพารามิเตอร์และฟังก์ชันเฉพาะของระบบได้ง่าย
-import os //คือคำสั่งนำเข้า module OS มาในโค้ดภาษา Python เพื่อทำงานกับระบบปฏิบัติ หรือ operating system
-from PyQt5.QtCore import QUrl // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtGui import QFont // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtCore import Qt,QLibraryInfo // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtWebEngineWidgets import QWebEngineView  // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QDialog, QLineEdit, QMessageBox, QHBoxLayout,QGraphicsOpacityEffect, QWidget,QProgressBar,QGridLayout // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtCore import Qt, QTimer,QSize // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-from PyQt5.QtGui import QPixmap, QImage, QFont,QMovie // คือคำสั่ง นำเข้า Module PyQt5 เพื่อแสดง UI ต่างๆ ในโปรแกรม
-import face_recognition // คือคำสั่งนำเข้า Module จดจำใบหน้า เป็น AI เพื่อใช้ตรวจสอบว่าเป็นใบหน้าของ คนไหม 
-import cv2 //เป็น Module ที่เอาไว้ จัดการรูปภาพและกล้อง
-import dlib //เป็น Module การตรวจจับใบหน้าด้วยไลบรารี่ Dlib (โดย Davis King) ซึ่งเป็น machine learning
-from datetime import datetime // เป็นคำสั่งนำเข้า Module เวลา
-import gspread //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Sheets ของ google
-from oauth2client.service_account import ServiceAccountCredentials //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-import os.path //คือคำสั่งนำเข้า module OS มาในโค้ดภาษา Python เพื่อทำงานกับระบบปฏิบัติ หรือ operating system
-
-from google.auth.transport.requests import Request //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-from google.oauth2.credentials import Credentials //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-from google_auth_oauthlib.flow import InstalledAppFlow //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-from googleapiclient.discovery import build //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-from googleapiclient.errors import HttpError //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-from google.oauth2 import service_account //  เป็นคำสั่งนำเข้า Module ที่ใช้จัดการ Account ของ google เพื่อเข้าไปทำอะไรสักอย่างตามคำสั่งที่เขียนใน โปรแกรม
-
-import webbrowser //เป็นคำสั่งนำเข้า Module เพื่อเข้าถึง webbrowser
-import qrcode //เป็นคำสั่งนำเข้า Module เพื่อสร้าง QRcode
-from io import BytesIO //Stream คือ ทางไหลของ byte ข้อมูล (data ที่มีค่าเป็นไปได้ -128 ถึง 127 : primitive data type) หลายๆ ก้อนต่อกัน จากจุดหนึงไปสู่อีกจุดหนึ่ง
-import subprocess // เป็น Module ที่ไว้ใช้เรียกคำสั่งเพิ่มจาก ตัวโปรแกรมที่ใช้ได้แค่ครั้ง ละ 1
-from face_recognition import face_locations // เป็น Module ที่ไว้ใช้ตรวจจับตำแหน่งของใบหน้า
-import time // เป็น Module นำเข้า เวลา
-import atexit //library ที่ช่วยให้ Raspberry Pi กลายเป็น Web Server
-import socket // โปรแกรม เชื่อมต่อระหว่าง server กับ client
+import sys  # sys ตัวนี้มันเป็น library ที่จัดเตรียมฟังก์ชันและตัวแปรที่ใช้เพื่อจัดการ interpreter
+import os  # คือคำสั่งนำเข้า module OS เพื่อทำงานกับระบบปฏิบัติการ
+from PyQt5.QtCore import QUrl, Qt, QTimer, QSize, QLibraryInfo  # รวม QtCore ไว้ด้วยกัน
+from PyQt5.QtGui import QFont, QPixmap, QImage, QMovie  # รวม QtGui ไว้ด้วยกัน
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QDialog, QLineEdit, QMessageBox, QHBoxLayout, QGraphicsOpacityEffect, QWidget, QProgressBar, QGridLayout
+import face_recognition  # โมดูลจดจำใบหน้า
+import cv2  # สำหรับจัดการรูปภาพและกล้อง
+import dlib  # ตรวจจับใบหน้าด้วย Dlib
+from datetime import datetime
+import gspread  # จัดการ Google Sheets
+from oauth2client.service_account import ServiceAccountCredentials
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from google.oauth2 import service_account
+import webbrowser
+import qrcode
+from io import BytesIO
+import subprocess
+from face_recognition import face_locations
+import time
+import atexit
+import socket
+import RPi.GPIO as GPIO  # เพิ่มตรงนี้
 
 def restart_program():
     try:
