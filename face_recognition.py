@@ -682,7 +682,7 @@ class ScanWindow(QMainWindow):
             scope = ['https://www.googleapis.com/auth/spreadsheets']
             credentials = service_account.Credentials.from_service_account_file('/home/project/Desktop/Project/uploadlog.json', scopes=scope)
             gc = gspread.authorize(credentials)
-            spreadsheet_key = '1BBYFhgDdp6J1AKoD6zzRl_q8BCFpKfIPy2eJImnugFw'
+            spreadsheet_key = 'YOUR_KEY'
             sheet = gc.open_by_key(spreadsheet_key).sheet1
             sheet.append_row(data_to_send)
             print(" Data sent to Google Sheets successfully.")
